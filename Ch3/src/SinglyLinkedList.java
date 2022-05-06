@@ -1,4 +1,4 @@
-public class SinglyLinkedList<E> {
+public class SinglyLinkedList<E> implements Cloneable{
     // nested class
     private static class Node<E> {
         private E element;
@@ -92,16 +92,66 @@ public class SinglyLinkedList<E> {
         return content;
     }
 
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+        if (getClass() != o.getClass()) {
+            return false;
+        }
+        SinglyLinkedList other = (SinglyLinkedList)o;
+        if (size != other.size()) {
+            return false;
+        }
+
+        Node walkA = head;
+        Node walkB = other.head;
+
+        while(walkA != null) {
+            if (!walkA.getElement().equals(walkB.getElement())) {
+                return false;
+            }
+            walkA = walkA.getNext();
+            walkB = walkB.getNext();
+        }
+        return true;
+    }
+
+    public SinglyLinkedList<E> clone() throws CloneNotSupportedException {
+        // always use inherited Object.clone to create initial copy
+        SinglyLinkedList<E> other = (SinglyLinkedList)super.clone();
+        if (size > 0) {
+            other.head = new Node<>(head.getElement(), null);
+            Node<E> walk = head.getNext();
+            Node<E> otherTail = other.head;
+            while(walk != null) {
+                Node<E> newest = new Node<>(walk.getElement(), null);
+                otherTail.setNext(newest);
+                otherTail = newest;
+                walk = walk.getNext();
+            }
+        }
+        return other;
+    }
+
     public static void main(String[] args) {
         SinglyLinkedList<String> list = new SinglyLinkedList<>();
         list.addFirst("Miguel");
         list.addFirst("Susan");
         list.addFirst("Erik");
         list.addLast("Sammuel");
-        System.out.print(list.toString());
+        System.out.print(list);
 
         list.removeFirst();
         list.removeFirst();
-        System.out.print(list.toString());
+        System.out.print(list);
+
+        SinglyLinkedList<String> listA = new SinglyLinkedList();
+        SinglyLinkedList<String> listB = new SinglyLinkedList();
+        listA.addFirst("Miguel");
+        listA.addFirst("Susie");
+        listB.addFirst("Miguel");
+        System.out.println("Testing equality");
+        System.out.print(listA.equals(listB));
     }
 }

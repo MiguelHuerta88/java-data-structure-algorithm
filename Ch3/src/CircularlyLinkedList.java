@@ -56,6 +56,7 @@ public class CircularlyLinkedList<E> {
             tail.setNext(tail);
         } else {
             Node<E> newest = new Node<>(e, tail.getNext());
+            tail.setNext(newest);
         }
         size++;
     }
@@ -75,5 +76,34 @@ public class CircularlyLinkedList<E> {
         }
         size--;
         return head.getElement();
+    }
+
+    public String toString() {
+        String contents = "Pringting out contents of CircularLinkedList\n";
+
+        if (isEmpty()) return contents;
+        int currentSize = size;
+        Node<E> currentHead = tail.getNext();
+        Node<E> currentTail = tail;
+        while(currentHead != currentTail) {
+            contents += "Value: " + currentHead.getElement() + "\n";
+            currentHead = currentHead.getNext();
+        }
+        contents += "Value: " + currentHead.getElement() + "\n";
+
+        return contents;
+    }
+
+    public static void main(String[] args) {
+        CircularlyLinkedList<String> list = new CircularlyLinkedList<>();
+        list.addFirst("Miguel");
+        list.addFirst("Susan");
+        list.addFirst("Erik");
+        list.addLast("Sammuel");
+        System.out.print(list);
+
+        list.removeFirst();
+        list.removeFirst();
+        System.out.print(list);
     }
 }
