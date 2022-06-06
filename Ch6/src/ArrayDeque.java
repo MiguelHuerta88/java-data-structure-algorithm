@@ -34,7 +34,7 @@ public class ArrayDeque<E> implements Deque<E> {
 
     @Override
     public E last() {
-        
+
     }
 
     @Override
