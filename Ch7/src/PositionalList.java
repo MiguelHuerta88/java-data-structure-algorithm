@@ -1,4 +1,6 @@
-public interface PositionalList<E> {
+import java.util.Iterator;
+
+public interface PositionalList<E> extends Iterable<E> {
     /**
      * Returns the number of elements in the list
      * @return int
@@ -87,4 +89,6 @@ public interface PositionalList<E> {
      * @throws IllegalArgumentException
      */
     E remove(Position<E> p) throws IllegalArgumentException;
+
+    public Iterator<E> iterator();
 }
