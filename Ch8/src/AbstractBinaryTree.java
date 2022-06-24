@@ -44,4 +44,33 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements B
             snapshot.add(right(p));
         return snapshot;
     }
+
+    /**
+     * Adds Positions of the subtree rooted at the Position p to the given snapshot
+     * Inorder => Left, Root, Right (On Binary Trees)
+     * @param p
+     * @param snapshot
+     */
+    private void inorderSubtree(Position<E> p, List<Position<E>> snapshot) {
+        if (left(p) != null) {
+            inorderSubtree(left(p), snapshot);
+        }
+        snapshot.add(p);
+        if (right(p) != null) {
+            inorderSubtree(right(p), snapshot);
+        }
+    }
+
+    /**
+     * Returns an iterable collection of positions of the tree, reported in inorder
+     * @return
+     */
+    public Iterable<Position<E>> inorder() {
+        List<Position<E>> snapshot = new ArrayList<>();
+        if (!isEmpty()) {
+            inorderSubtree(root(), snapshot);
+        }
+
+        return snapshot;
+    }
 }
