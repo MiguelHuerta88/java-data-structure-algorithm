@@ -73,4 +73,17 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements B
 
         return snapshot;
     }
+
+    public static <E> int layout(BinaryTree<E> T, Position<E> p, int d, int x)
+    {
+        if (T.left(p) != null) {
+            x = layout(T, T.left(p), d + 1, x); // resulting x will be increased
+        }
+        p.getElement().setX(x++); // post increment x
+        p.getElement().setY(d);
+        if (T.right(p)) {
+            x = layout(T, T.right(p), d + 1, x); // result x will be increased
+        }
+        return x;
+    }
 }
